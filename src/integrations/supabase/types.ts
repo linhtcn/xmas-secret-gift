@@ -35,22 +35,55 @@ export type Database = {
         }
         Relationships: []
       }
+      game_statistics: {
+        Row: {
+          created_at: string
+          fake_count: number
+          id: string
+          last_fake_increment: string
+          real_count: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          fake_count?: number
+          id?: string
+          last_fake_increment?: string
+          real_count?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          fake_count?: number
+          id?: string
+          last_fake_increment?: string
+          real_count?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       questionnaire_responses: {
         Row: {
           completed_at: string
+          deleted_at: string | null
           id: string
+          player_name: string | null
           responses: Json
           user_type: Database["public"]["Enums"]["user_type"]
         }
         Insert: {
           completed_at?: string
+          deleted_at?: string | null
           id?: string
+          player_name?: string | null
           responses: Json
           user_type: Database["public"]["Enums"]["user_type"]
         }
         Update: {
           completed_at?: string
+          deleted_at?: string | null
           id?: string
+          player_name?: string | null
           responses?: Json
           user_type?: Database["public"]["Enums"]["user_type"]
         }

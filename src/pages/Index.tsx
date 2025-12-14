@@ -1,20 +1,28 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Lock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import Snowfall from "@/components/Snowfall";
 import ChristmasMusic from "@/components/ChristmasMusic";
+import NameInput from "@/components/NameInput";
 import RoleSelection from "@/components/RoleSelection";
 import Questionnaire from "@/components/Questionnaire";
 import GiftReveal from "@/components/GiftReveal";
+import VisitorCount from "@/components/VisitorCount";
+import { useGameStats } from "@/hooks/useGameStats";
 
-type GameState = "selection" | "questionnaire" | "gift";
+type GameState = "name" | "selection" | "questionnaire" | "gift";
 
 const Index = () => {
-  const [gameState, setGameState] = useState<GameState>("selection");
+  const [gameState, setGameState] = useState<GameState>("name");
+  const [playerName, setPlayerName] = useState<string>("");
   const [userType, setUserType] = useState<"friend" | "family" | null>(null);
   const [isReady, setIsReady] = useState(true);
+  const { totalVisibleCount, loading: statsLoading, incrementRealCount } = useGameStats();
+
+  const handleNameSubmit = (name: string) => {
+    setPlayerName(name);
+    setGameState("selection");
+  };
 
   const handleRoleSelect = (role: "friend" | "family") => {
     setUserType(role);
@@ -27,17 +35,21 @@ const Index = () => {
     setIsReady(!readyAnswer.includes("Chưa"));
 
     try {
-      // Save responses to database
+      // Save responses to database with player name
       const { error } = await supabase
         .from("questionnaire_responses")
         .insert({
           user_type: userType,
           responses: responses,
+          player_name: playerName,
         });
 
       if (error) {
         console.error("Error saving responses:", error);
         toast.error("Không thể lưu câu trả lời, nhưng vẫn có quà cho bạn!");
+      } else {
+        // Increment real count on successful completion
+        await incrementRealCount();
       }
     } catch (err) {
       console.error("Error:", err);
@@ -47,7 +59,8 @@ const Index = () => {
   };
 
   const handleRestart = () => {
-    setGameState("selection");
+    setGameState("name");
+    setPlayerName("");
     setUserType(null);
     setIsReady(true);
   };
@@ -68,16 +81,14 @@ const Index = () => {
       {/* Christmas Music */}
       <ChristmasMusic />
       
-      {/* Admin Link */}
-      <Link
-        to="/admin"
-        className="fixed bottom-4 right-4 z-50 p-3 rounded-full bg-card/50 backdrop-blur-sm border border-border hover:bg-card transition-all duration-300 opacity-40 hover:opacity-100"
-        title="Admin Login"
-      >
-        <Lock size={18} className="text-muted-foreground" />
-      </Link>
+      {/* Visitor Count */}
+      <VisitorCount count={totalVisibleCount} loading={statsLoading} />
 
       {/* Game Content */}
+      {gameState === "name" && (
+        <NameInput onSubmit={handleNameSubmit} />
+      )}
+      
       {gameState === "selection" && (
         <RoleSelection onSelect={handleRoleSelect} />
       )}
