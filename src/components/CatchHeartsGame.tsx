@@ -53,7 +53,7 @@ const CatchHeartsGame = ({ onComplete, onBack }: CatchHeartsGameProps) => {
         x: Math.random() * 80 + 10, // 10-90% of screen width
         y: -10,
         type: Math.random() > 0.3 ? "heart" : "snowflake",
-        speed: Math.random() * 2 + 2, // 2-4 speed
+        speed: Math.random() * 0.8 + 0.8, // 0.8-1.6 speed (slower)
       };
       setNextId((prev) => prev + 1);
       setItems((prev) => [...prev, newItem]);
