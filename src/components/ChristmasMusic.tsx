@@ -39,7 +39,7 @@ const ChristmasMusic = () => {
       <audio
         ref={audioRef}
         loop
-        src="/all-i-want-for-christmas.mp3"
+        src="/christmas-music.mp3"
       />
       <div 
         className="fixed top-4 right-4 z-50 flex items-center gap-2"
