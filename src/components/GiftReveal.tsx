@@ -5,9 +5,11 @@ interface GiftRevealProps {
   onRestart: () => void;
   userType: "friend" | "family";
   isReady: boolean;
+  gameScore: number;
+  playerName: string;
 }
 
-const GiftReveal = ({ onRestart, userType, isReady }: GiftRevealProps) => {
+const GiftReveal = ({ onRestart, userType, isReady, gameScore, playerName }: GiftRevealProps) => {
   const [stage, setStage] = useState<"intro" | "reveal" | "message">("intro");
 
   useEffect(() => {
@@ -131,18 +133,19 @@ const GiftReveal = ({ onRestart, userType, isReady }: GiftRevealProps) => {
 
           <div className="p-6 rounded-2xl bg-gradient-to-br from-christmas-red/20 to-christmas-green/20 border border-christmas-gold/30">
             <p className="font-christmas text-3xl md:text-4xl text-christmas-gold animate-pulse-glow inline-block">
-              ✨ Lời chúc Giáng Sinh An Lành ✨
+              ✨ {gameScore} trái tim từ Linh ✨
             </p>
             <p className="text-christmas-cream/80 mt-4 text-lg">
               {userType === "friend" ? (
                 <>
-                  Chúc bạn và gia đình một mùa Giáng Sinh ấm áp, 
+                  {playerName && <span className="text-christmas-gold font-semibold">{playerName}</span>}
+                  {playerName ? ", c" : "C"}húc bạn và gia đình một mùa Giáng Sinh ấm áp, 
                   <br />
                   tràn đầy yêu thương và hạnh phúc! 🎄❤️
                 </>
               ) : (
                 <>
-                  Cảm ơn gia đình đã luôn yêu thương và ủng hộ!
+                  Cảm ơn {playerName || "gia đình"} đã luôn yêu thương và ủng hộ!
                   <br />
                   Chúc cả nhà mình Giáng Sinh thật vui vẻ và ấm cúng! 🏠💕
                 </>

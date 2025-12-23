@@ -6,17 +6,19 @@ import ChristmasMusic from "@/components/ChristmasMusic";
 import NameInput from "@/components/NameInput";
 import RoleSelection from "@/components/RoleSelection";
 import Questionnaire from "@/components/Questionnaire";
+import CatchHeartsGame from "@/components/CatchHeartsGame";
 import GiftReveal from "@/components/GiftReveal";
 import VisitorCount from "@/components/VisitorCount";
 import { useGameStats } from "@/hooks/useGameStats";
 
-type GameState = "name" | "selection" | "questionnaire" | "gift";
+type GameState = "name" | "selection" | "questionnaire" | "minigame" | "gift";
 
 const Index = () => {
   const [gameState, setGameState] = useState<GameState>("name");
   const [playerName, setPlayerName] = useState<string>("");
   const [userType, setUserType] = useState<"friend" | "family" | null>(null);
   const [isReady, setIsReady] = useState(true);
+  const [gameScore, setGameScore] = useState(0);
   const { totalVisibleCount, loading: statsLoading, incrementRealCount } = useGameStats();
 
   const handleNameSubmit = (name: string) => {
@@ -55,7 +57,16 @@ const Index = () => {
       console.error("Error:", err);
     }
 
+    setGameState("minigame");
+  };
+
+  const handleGameComplete = (score: number) => {
+    setGameScore(score);
     setGameState("gift");
+  };
+
+  const handleGameBack = () => {
+    setGameState("questionnaire");
   };
 
   const handleRestart = () => {
@@ -63,6 +74,7 @@ const Index = () => {
     setPlayerName("");
     setUserType(null);
     setIsReady(true);
+    setGameScore(0);
   };
 
   const handleBack = () => {
@@ -101,8 +113,18 @@ const Index = () => {
         />
       )}
       
+      {gameState === "minigame" && (
+        <CatchHeartsGame onComplete={handleGameComplete} onBack={handleGameBack} />
+      )}
+      
       {gameState === "gift" && userType && (
-        <GiftReveal onRestart={handleRestart} userType={userType} isReady={isReady} />
+        <GiftReveal 
+          onRestart={handleRestart} 
+          userType={userType} 
+          isReady={isReady} 
+          gameScore={gameScore}
+          playerName={playerName}
+        />
       )}
     </div>
   );
