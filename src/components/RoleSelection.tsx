@@ -80,7 +80,7 @@ const RoleSelection = ({ onSelect }: RoleSelectionProps) => {
       </div>
 
       {/* Decorative Elements */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-4 text-4xl">
+      <div className="justify-center my-14 flex gap-4 text-4xl">
         <span className="animate-float" style={{ animationDelay: "0s" }}>🦌</span>
         <span className="animate-float" style={{ animationDelay: "0.5s" }}>🎅</span>
         <span className="animate-float" style={{ animationDelay: "1s" }}>🦌</span>

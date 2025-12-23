@@ -113,13 +113,20 @@ const Admin = () => {
 
   const handleSoftDelete = async (id: string) => {
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("questionnaire_responses")
         .update({ deleted_at: new Date().toISOString() })
-        .eq("id", id);
+        .eq("id", id)
+        .select();
 
       if (error) {
-        toast.error("Không thể xóa!");
+        console.error("Delete error:", error);
+        toast.error(`Không thể xóa! ${error.message || error.code || ""}`);
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        toast.error("Không tìm thấy bản ghi để xóa!");
         return;
       }
 
@@ -127,18 +134,26 @@ const Admin = () => {
       fetchResponses();
     } catch (err) {
       console.error("Error:", err);
+      toast.error(`Lỗi: ${err instanceof Error ? err.message : "Có lỗi xảy ra"}`);
     }
   };
 
   const handleRestore = async (id: string) => {
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("questionnaire_responses")
         .update({ deleted_at: null })
-        .eq("id", id);
+        .eq("id", id)
+        .select();
 
       if (error) {
-        toast.error("Không thể khôi phục!");
+        console.error("Restore error:", error);
+        toast.error(`Không thể khôi phục! ${error.message || error.code || ""}`);
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        toast.error("Không tìm thấy bản ghi để khôi phục!");
         return;
       }
 
@@ -146,6 +161,7 @@ const Admin = () => {
       fetchResponses();
     } catch (err) {
       console.error("Error:", err);
+      toast.error(`Lỗi: ${err instanceof Error ? err.message : "Có lỗi xảy ra"}`);
     }
   };
 

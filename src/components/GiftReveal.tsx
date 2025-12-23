@@ -51,7 +51,7 @@ const GiftReveal = ({ onRestart, userType, isReady, gameScore, playerName }: Gif
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 relative z-20 overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 relative z-20 overflow-hidden py-5">
       {/* Background Decorations */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Christmas Trees */}

@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        christmas: ['"Mountains of Christmas"', 'cursive'],
-        body: ['Quicksand', 'sans-serif'],
+        christmas: ['"Berkshire Swash"', 'cursive'],
+        body: ['"Berkshire Swash"', 'cursive'],
+        sans: ['"Berkshire Swash"', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",
