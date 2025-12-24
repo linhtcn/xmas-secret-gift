@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700;800&subset=vietnamese&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -78,17 +78,17 @@
     @apply bg-background text-foreground font-body antialiased;
     background: var(--gradient-night);
     min-height: 100vh;
-    font-family: 'Berkshire Swash', cursive;
+    font-family: 'Nunito', 'Dancing Script', sans-serif;
   }
 }
 
 @layer utilities {
   .font-christmas {
-    font-family: 'Berkshire Swash', cursive;
+    font-family: 'Dancing Script', cursive;
   }
 
   .font-body {
-    font-family: 'Berkshire Swash', cursive;
+    font-family: 'Nunito', sans-serif;
   }
 
   .text-gradient-gold {

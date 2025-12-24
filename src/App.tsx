@@ -17,7 +17,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/admin" element={<Admin />} />
           <Route path="/admin/dashboard/login" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

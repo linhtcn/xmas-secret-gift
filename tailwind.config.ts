@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        christmas: ['"Berkshire Swash"', 'cursive'],
-        body: ['"Berkshire Swash"', 'cursive'],
-        sans: ['"Berkshire Swash"', 'cursive'],
+        christmas: ['"Dancing Script"', 'cursive'],
+        body: ['"Nunito"', 'sans-serif'],
+        sans: ['"Nunito"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
